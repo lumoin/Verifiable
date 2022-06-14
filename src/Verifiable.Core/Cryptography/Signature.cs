@@ -1,11 +1,7 @@
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Verifiable.Core.Cryptography
 {
@@ -25,6 +21,6 @@ namespace Verifiable.Core.Cryptography
         /// </summary>
         /// <param name="signature"></param>
         [DebuggerStepThrough, MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static implicit operator ReadOnlySpan<byte>(Signature signature) => signature.SensitiveData.Memory.Span;
+        public static implicit operator ReadOnlySpan<byte>(Signature signature) => signature.AsReadOnlySpan();
     }
 }

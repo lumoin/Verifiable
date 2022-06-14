@@ -1,6 +1,6 @@
 using System;
 using System.Buffers;
-using System.Runtime.CompilerServices;
+
 
 namespace Verifiable.Core.Cryptography
 {
@@ -61,10 +61,11 @@ namespace Verifiable.Core.Cryptography
         /// </summary>
         private bool disposed;
 
+        
         /// <summary>
         /// The piece of sensitive data.
         /// </summary>
-        protected readonly IMemoryOwner<byte> SensitiveData;
+        private readonly IMemoryOwner<byte> sensitiveMemory;
 
 
         /// <summary>
@@ -73,7 +74,16 @@ namespace Verifiable.Core.Cryptography
         /// <param name="sensitiveMemory">The piece of sensitive memory that is wrapped and owned.</param>
         protected SensitiveMemory(IMemoryOwner<byte> sensitiveMemory)
         {
-            SensitiveData = sensitiveMemory ?? throw new ArgumentNullException(nameof(sensitiveMemory));
+            this.sensitiveMemory = sensitiveMemory ?? throw new ArgumentNullException(nameof(sensitiveMemory));
+        }
+
+
+        /// <summary>
+        /// Exposes the internal sensitive memory for some special purposes, such as formatting.
+        /// </summary>
+        public ReadOnlySpan<byte> AsReadOnlySpan()
+        {
+            return sensitiveMemory.Memory.Span;
         }
 
 
@@ -100,7 +110,7 @@ namespace Verifiable.Core.Cryptography
             if(disposing)
             {
                 // Dispose managed state (managed objects).
-                SensitiveData?.Dispose();
+                sensitiveMemory?.Dispose();
             }
 
             disposed = true;

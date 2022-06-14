@@ -31,7 +31,7 @@ namespace Verifiable.Core.Cryptography
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TResult WithKeyBytes<TDataToSign, TResult>(SigningFunction<byte, TDataToSign, TResult> sensitiveFunc, ReadOnlySpan<TDataToSign> arg, MemoryPool<byte> signaturePool) where TResult: Signature
         {
-            return sensitiveFunc(SensitiveData.Memory.Span, arg, signaturePool);
+            return sensitiveFunc(AsReadOnlySpan(), arg, signaturePool);
         }
     }
 }

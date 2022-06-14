@@ -43,7 +43,7 @@ namespace Verifiable.Security.Windows
         /// <inheritdoc />
         public TResult WithSensitiveMemory<TResult>(ReadOnlySpanFunc<byte, TResult> sensitiveFunc)
         {
-            ReadOnlySpan<byte> unEncryptedData = ProtectedData.Unprotect(this.SensitiveData.Memory.ToArray(), this.entropy, DataProtectionScope.LocalMachine);
+            ReadOnlySpan<byte> unEncryptedData = ProtectedData.Unprotect(AsReadOnlySpan().ToArray(), this.entropy, DataProtectionScope.LocalMachine);
             return sensitiveFunc(unEncryptedData);
         }
 

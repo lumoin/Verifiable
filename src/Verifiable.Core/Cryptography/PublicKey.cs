@@ -1,5 +1,4 @@
 using System;
-using System.Buffers;
 using System.Runtime.CompilerServices;
 
 namespace Verifiable.Core.Cryptography
@@ -17,7 +16,7 @@ namespace Verifiable.Core.Cryptography
         /// <summary>
         /// A convenience getter to return the public key memory instead of a generic one.
         /// </summary>
-        new protected PublicKeyMemory KeyMemory { get { return (PublicKeyMemory)base.KeyMemory; } }
+        new protected PublicKeyMemory KeyMaterial { get { return (PublicKeyMemory)base.KeyMaterial; } }
 
         /// <summary>
         /// Public key constructor.
@@ -41,7 +40,7 @@ namespace Verifiable.Core.Cryptography
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Verify(ReadOnlySpan<byte> dataToVerify, Signature signature)
         {
-            return KeyMemory.Verify(dataToVerify, signature, verificationFunction);
+            return KeyMaterial.Verify(dataToVerify, signature, verificationFunction);
         }
     }
 }

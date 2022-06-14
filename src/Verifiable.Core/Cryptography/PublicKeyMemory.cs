@@ -15,12 +15,12 @@ namespace Verifiable.Core.Cryptography
         /// <summary>
         /// KeyMemory constructor.
         /// </summary>
-        /// <param name="sensitiveData">The piece of sensitive data.</param>
-        public PublicKeyMemory(IMemoryOwner<byte> sensitiveData): base(sensitiveData)
+        /// <param name="sensitiveMemory">The piece of sensitive data.</param>
+        public PublicKeyMemory(IMemoryOwner<byte> sensitiveMemory): base(sensitiveMemory)
         {
-            if(sensitiveData == null)
+            if(sensitiveMemory == null)
             {
-                throw new ArgumentNullException(nameof(sensitiveData));
+                throw new ArgumentNullException(nameof(sensitiveMemory));
             }
         }
 
@@ -38,7 +38,7 @@ namespace Verifiable.Core.Cryptography
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public TResult WithKeyBytes<TArg0, TArg1, TResult>(VerificationFunction<byte, TArg0, TArg1, TResult> sensitiveFunc, ReadOnlySpan<TArg0> arg0, TArg1 arg1)
         {
-            return sensitiveFunc(SensitiveData.Memory.Span, arg0, arg1);
+            return sensitiveFunc(AsReadOnlySpan(), arg0, arg1);
         }
     }
 }

@@ -149,13 +149,13 @@ jobs:
               echo "VERSION=$VERSION" >> "$GITHUB_ENV"
               echo "VERSION_SUFFIX=$VERSION-release" >> "$GITHUB_ENV"
           elif [[ $GITHUB_REF == 'refs/heads/develop' ]]; then
-              echo "PACKAGE_VERSION=0.0.0.1-${GITHUB_SHA::7}-develop" >> "$GITHUB_ENV"
+              echo "PACKAGE_VERSION=0.0.0.1-$GITHUB_RUN_ID-${GITHUB_SHA::7}-develop" >> "$GITHUB_ENV"
               echo "PACKAGE=0.0.0.1" >> "$GITHUB_ENV"
-              echo "VERSION_SUFFIX=${GITHUB_SHA::7}-develop" >> "$GITHUB_ENV"
+              echo "VERSION_SUFFIX=$GITHUB_RUN_ID-${GITHUB_SHA::7}-develop" >> "$GITHUB_ENV"
           else
-              echo "PACKAGE_VERSION=0.0.0.1-${GITHUB_SHA::7}-dev" >> "$GITHUB_ENV"
+              echo "PACKAGE_VERSION=0.0.0.1-$GITHUB_RUN_ID-${GITHUB_SHA::7}-dev" >> "$GITHUB_ENV"
               echo "VERSION=0.0.0.1" >> "$GITHUB_ENV"
-              echo "VERSION_SUFFIX=${GITHUB_SHA::7}-dev" >> "$GITHUB_ENV"
+              echo "VERSION_SUFFIX=$GITHUB_RUN_ID-${GITHUB_SHA::7}-dev" >> "$GITHUB_ENV"
           fi
       shell: bash
 

@@ -29,6 +29,7 @@ namespace Verifiable.Core.Did
         public static ImmutableDictionary<string, Func<string, JsonSerializerOptions, KeyFormat>> DefaultTypeMap =>
             new Dictionary<string, Func<string, JsonSerializerOptions, KeyFormat>>(StringComparer.OrdinalIgnoreCase)
         {
+            { "publicKeyMultibase", new Func<string, JsonSerializerOptions, PublicKeyMultibase>((json, _) => new PublicKeyMultibase(json)) },
             { "publicKeyBase58", new Func<string, JsonSerializerOptions, PublicKeyBase58>((json, _) => new PublicKeyBase58(json)) },
             { "publicKeyPem", new Func<string, JsonSerializerOptions, PublicKeyPem>((json, _) => new PublicKeyPem(json)) },
             { "publicKeyHex", new Func<string, JsonSerializerOptions, PublicKeyHex>((json, _) => new PublicKeyHex(json)) },
@@ -64,6 +65,9 @@ namespace Verifiable.Core.Did
             {
                 ThrowHelper.ThrowJsonException();
             }
+
+            //TODO: There can be also other properties. So there likely needs to be a simlar construct to
+            //as ServiceConverter, e.g. "public class SocialWebInboxService: Service".
 
             //Parsing the document forwards moves the index. The element start position
             //is stored to a temporary variable here so it can be given directly to JsonSerializer.
@@ -112,6 +116,11 @@ namespace Verifiable.Core.Did
             if(value?.KeyFormat is PublicKeyHex hex)
             {
                 writer.WriteString("publicKeyHex", hex?.Key);
+            }
+
+            if(value?.KeyFormat is PublicKeyMultibase multibase)
+            {
+                writer.WriteString("publicKeyMultibase", multibase?.Key);
             }
 
             if(value?.KeyFormat is PublicKeyBase58 base58)

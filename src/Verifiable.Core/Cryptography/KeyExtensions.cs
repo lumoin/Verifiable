@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace Verifiable.Core.Cryptography
 {
     /// <summary>
-    /// Convenience functions to be used with <see cref="SensitiveMemory"/> types.
+    /// Convenience functions to be used with <see cref="Key"/> derived types.
     /// </summary>
     public static class KeyExtensions
     {

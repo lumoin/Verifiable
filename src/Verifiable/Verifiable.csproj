@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -10,6 +10,14 @@
     <PackageTags>ssi wallet tpm2 trusted-platform-module eidas did self-sovereign-identity verifiable-credentials decentralized-identifiers</PackageTags>
     <ApplicationIcon>resources/verifiable-nuget-logo.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <!--
+  https://docs.microsoft.com/en-us/dotnet/core/deploying/trimming/prepare-libraries-for-trimming
+  <PropertyGroup>
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimmerDefaultAction>link</TrimmerDefaultAction>
+  </PropertyGroup>
+  -->
 
   <ItemGroup>
     <PackageReference Include="Spectre.Console" Version="0.44.0" />

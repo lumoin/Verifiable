@@ -26,8 +26,8 @@ namespace Verifiable.Tests
         {
             var bouncyGenerator = new BouncyCastleKeyGenerator();
             var keys = bouncyGenerator.GenerateEd25519PublicPrivateKeyPair(MemoryPool<byte>.Shared);
-            var publicKey = keys.Item1;
-            var privateKey = keys.Item2;
+            var publicKey = keys.PublicKeyMemory;
+            var privateKey = keys.PrivateKeyMemory;
 
             var data = (ReadOnlySpan<byte>)TestData;
             using var signature = privateKey.Sign(data, NSecAlgorithms.SignEd25519, MemoryPool<byte>.Shared);
@@ -40,8 +40,8 @@ namespace Verifiable.Tests
         {
             var nsecKeyGenerator = new NSecKeyGenerator();
             var keys = nsecKeyGenerator.GenerateEd25519PublicPrivateKeyPair(MemoryPool<byte>.Shared);
-            var publicKey = keys.Item1;
-            var privateKey = keys.Item2;
+            var publicKey = keys.PublicKeyMemory;
+            var privateKey = keys.PrivateKeyMemory;
 
             var data = (ReadOnlySpan<byte>)TestData;
             using var signature = privateKey.Sign(data, BouncyCastleAlgorithms.SignEd25519, MemoryPool<byte>.Shared);
@@ -54,8 +54,8 @@ namespace Verifiable.Tests
         {
             var nsecKeyGenerator = new NSecKeyGenerator();
             var keys = nsecKeyGenerator.GenerateEd25519PublicPrivateKeyPair(MemoryPool<byte>.Shared);
-            var publicKey = keys.Item1;
-            var privateKey = keys.Item2;
+            var publicKey = keys.PublicKeyMemory;
+            var privateKey = keys.PrivateKeyMemory;
 
             var data = (ReadOnlySpan<byte>)TestData;
             using var signature = privateKey.Sign(data, NSecAlgorithms.SignEd25519, MemoryPool<byte>.Shared);
@@ -68,8 +68,8 @@ namespace Verifiable.Tests
         {
             var bouncyGenerator = new BouncyCastleKeyGenerator();
             var keys = bouncyGenerator.GenerateEd25519PublicPrivateKeyPair(MemoryPool<byte>.Shared);
-            var publicKey = keys.Item1;
-            var privateKey = keys.Item2;
+            var publicKey = keys.PublicKeyMemory;
+            var privateKey = keys.PrivateKeyMemory;
 
             var data = (ReadOnlySpan<byte>)TestData;
             using var signature = privateKey.Sign(data, BouncyCastleAlgorithms.SignEd25519, MemoryPool<byte>.Shared);

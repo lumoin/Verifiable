@@ -27,8 +27,8 @@ namespace Verifiable.Core
         public void CanGenerateKeyPairEd255019()
         {
             var keys = KeyGenerator.GenerateEd25519PublicPrivateKeyPair(MemoryPool<byte>.Shared);
-            Assert.NotNull(keys.Item1);
-            Assert.NotNull(keys.Item2);
+            Assert.NotNull(keys.PublicKeyMemory);
+            Assert.NotNull(keys.PrivateKeyMemory);
         }
 
 
@@ -36,9 +36,9 @@ namespace Verifiable.Core
         public void CanSignAndVerifyEd255019()
         {
             var keys = KeyGenerator.GenerateEd25519PublicPrivateKeyPair(MemoryPool<byte>.Shared);
-            var publicKey = keys.Item1;
-            var privateKey = keys.Item2;
-
+            var publicKey = keys.PublicKeyMemory;
+            var privateKey = keys.PrivateKeyMemory;
+            
             var data = (ReadOnlySpan<byte>)TestData;
             using var signature = privateKey.Sign(data, BouncyCastleAlgorithms.SignEd25519, MemoryPool<byte>.Shared);
             Assert.True(publicKey.Verify(data, signature, BouncyCastleAlgorithms.VerifyEd25519));
@@ -50,8 +50,8 @@ namespace Verifiable.Core
         {
             var keys = KeyGenerator.GenerateEd25519PublicPrivateKeyPair(MemoryPool<byte>.Shared);
 
-            var publicKey = new Core.Cryptography.PublicKey(keys.Item1, "Test-1", BouncyCastleAlgorithms.VerifyEd25519);
-            var privateKey = new PrivateKey(keys.Item2, "Test-1", BouncyCastleAlgorithms.SignEd25519);
+            var publicKey = new Core.Cryptography.PublicKey(keys.PublicKeyMemory, "Test-1", BouncyCastleAlgorithms.VerifyEd25519);
+            var privateKey = new PrivateKey(keys.PrivateKeyMemory, "Test-1", BouncyCastleAlgorithms.SignEd25519);
 
             var data = (ReadOnlySpan<byte>)TestData;
             using var signature = privateKey.Sign(data, MemoryPool<byte>.Shared);

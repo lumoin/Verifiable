@@ -35,14 +35,14 @@ namespace Verifiable.Tests
         /// Loads the given file.
         /// </summary>
         /// <param name="file">The file to load.</param>
-        public FilesDataAttribute(string file): this(Path.GetDirectoryName(file ?? Path.GetTempPath()) ?? Path.GetTempPath(), Path.GetFileName(file ?? Path.GetTempFileName()), SearchOption.TopDirectoryOnly) { }
+        public FilesDataAttribute(string file) : this(Path.GetDirectoryName(file ?? Path.GetTempPath()) ?? Path.GetTempPath(), Path.GetFileName(file ?? Path.GetTempFileName()), SearchOption.TopDirectoryOnly) { }
 
 
         /// <summary>
         /// Loads files from a given directory with a given search pattern.
         /// </summary>
         /// <param name="directory">The absolute or relative path to the JSON file to load</param>
-        public FilesDataAttribute(string directory, string searchPattern): this(directory, searchPattern, SearchOption.AllDirectories) { }
+        public FilesDataAttribute(string directory, string searchPattern) : this(directory, searchPattern, SearchOption.AllDirectories) { }
 
 
         /// <summary>
@@ -79,24 +79,24 @@ namespace Verifiable.Tests
             }
 
 
-             var enumeration = new FileSystemEnumerable<string>(
-                directory: DirectoryPath,
-                transform: (ref FileSystemEntry entry) => entry.ToFullPath(),
-                options: new EnumerationOptions()
-                {
-                    RecurseSubdirectories = true
-                })
+            var enumeration = new FileSystemEnumerable<string>(
+               directory: DirectoryPath,
+               transform: (ref FileSystemEntry entry) => entry.ToFullPath(),
+               options: new EnumerationOptions()
+               {
+                   RecurseSubdirectories = true
+               })
             {
-                 ShouldIncludePredicate = (ref FileSystemEntry entry) =>
-                 {
-                     if(entry.IsDirectory)
-                     {
-                         return false;
-                     }
+                ShouldIncludePredicate = (ref FileSystemEntry entry) =>
+                {
+                    if(entry.IsDirectory)
+                    {
+                        return false;
+                    }
 
-                     var entryPath =entry.ToFullPath();
-                     return entryPath.EndsWith(SearchPattern);
-                 }
+                    var entryPath = entry.ToFullPath();
+                    return entryPath.EndsWith(SearchPattern);
+                }
             };
 
             var files = enumeration.ToList();

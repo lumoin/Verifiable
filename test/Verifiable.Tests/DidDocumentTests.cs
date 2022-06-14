@@ -330,7 +330,6 @@ namespace Verifiable.Tests
                     new SingleOrArrayControllerConverter(),
                     new VerificationRelationshipConverterFactory(),
                     new VerificationMethodConverter(verificationMethodTypeMap.ToImmutableDictionary()),
-                    new VerificationMethodConverter(),
                     new ServiceConverterFactory(),
                     new JsonLdContextConverter()
                 }
@@ -339,9 +338,8 @@ namespace Verifiable.Tests
             DidDocument? deseserializedDidDocument = JsonSerializer.Deserialize<DidDocument>(didDocumentFileContents, options);
             string reserializedDidDocument = JsonSerializer.Serialize(deseserializedDidDocument, options);
 
-            //All the DID documents need to have an ID and a context.
+            //All the DID documents need to have an ID.
             Assert.NotNull(deseserializedDidDocument?.Id);
-            Assert.NotNull(deseserializedDidDocument?.Context);
             Assert.NotNull(reserializedDidDocument);
 
             var comparer = new JsonElementComparer();
